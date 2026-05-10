@@ -10,7 +10,7 @@ import useAuthModal from '@/hooks/useAuthModal';
 import { useSupabase } from '@/providers/SupabaseProvider';
 
 interface LikeButtonProps {
-  songId: string;
+  songId: number;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
