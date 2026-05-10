@@ -20,10 +20,10 @@ const MediaItem: React.FC<MediaItemProps> = ({
 
   const handleClick = () => {
     if (onClick) {
-      return onClick(data.id);
+      return onClick(String(data.id));
     }
   
-    return player.setId(data.id);
+    return player.setId(String(data.id));
   };
 
   return ( 

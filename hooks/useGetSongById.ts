@@ -20,7 +20,7 @@ const useSongById = (id?: string) => {
       const { data, error } = await supabase
         .from('songs')
         .select('*')
-        .eq('id', id)
+        .eq('id', Number(id))
         .single();
 
       if (error) {

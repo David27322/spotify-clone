@@ -21,7 +21,7 @@ const useOnPlay = (songs: Song[]) => {
     }
 
     player.setId(id);
-    player.setIds(songs.map((song) => song.id));
+    player.setIds(songs.map((song) => String(song.id)));
   };
 
   return onPlay;
