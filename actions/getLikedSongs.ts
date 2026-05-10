@@ -1,21 +1,29 @@
 import { Song } from '@/types';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { cookies, headers } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
 const getLikedSongs = async (): Promise<Song[]> => {
-  const supabase = createServerComponentSupabaseClient({
-    headers: headers,
-    cookies: cookies,
-  });
+  const cookieStore = cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+      },
+    }
+  );
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const { data } = await supabase
     .from('liked_songs')
     .select('*, songs(*)')
-    .eq('user_id', session?.user?.id)
+    .eq('user_id', user?.id)
     .order('created_at', { ascending: false });
 
   if (!data) return [];

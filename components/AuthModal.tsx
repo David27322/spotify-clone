@@ -11,16 +11,28 @@ import { useSupabase } from '@/providers/SupabaseProvider';
 import Modal from './Modal';
 
 const AuthModal = () => {
-  const { supabase, session } = useSupabase();
+  const { supabase } = useSupabase();
   const router = useRouter();
   const { onClose, isOpen } = useAuthModal();
 
   useEffect(() => {
-    if (session) {
-      router.refresh();
-      onClose();
+    if (!supabase) {
+      return;
     }
-  }, [session, router, onClose]);
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (session) {
+          router.refresh();
+          onClose();
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [supabase, router, onClose]);
 
   const onChange = (open: boolean) => {
     if (!open) {

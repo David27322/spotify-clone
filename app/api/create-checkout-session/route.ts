@@ -1,5 +1,5 @@
-import { createRouteHandlerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { headers, cookies } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 import { stripe } from '@/libs/stripe';
@@ -10,10 +10,19 @@ export async function POST(request: Request) {
   const { price, quantity = 1, metadata = {} } = await request.json();
 
   try {
-    const supabase = createRouteHandlerSupabaseClient({
-      headers,
-      cookies,
-    });
+    const cookieStore = cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+        },
+      }
+    );
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -36,14 +45,14 @@ export async function POST(request: Request) {
       mode: 'subscription',
       allow_promotion_codes: true,
       subscription_data: {
-        trial_from_plan: true,
+        trial_period_days: 30,
         metadata,
       },
       success_url: `${getURL()}/account`,
       cancel_url: `${getURL()}/`,
     });
 
-    return NextResponse.json({ sessionId: session.id });
+   return NextResponse.json({ url: session.url });
   } catch (err: any) {
     console.log(err);
     return new NextResponse('Internal Error', { status: 500 });

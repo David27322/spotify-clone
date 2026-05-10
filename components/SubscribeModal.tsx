@@ -6,7 +6,6 @@ import { toast } from 'react-hot-toast';
 import useSubscribeModal from '@/hooks/useSubscribeModal';
 import { useUser } from '@/hooks/useUser';
 import { postData } from '@/libs/helpers';
-import { getStripe } from '@/libs/stripeClient';
 import { Price, ProductWithPrice } from '@/types';
 
 import Modal from './Modal';
@@ -51,13 +50,17 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
     }
 
     try {
-      const { sessionId } = await postData({
+      const { url } = await postData({
         url: '/api/create-checkout-session',
         data: { price },
       });
+      console.log('Checkout URL:', url);
 
-      const stripe = await getStripe();
-      stripe?.redirectToCheckout({ sessionId });
+      if (!url) {
+        throw new Error('No checkout URL returned');
+      }
+
+      window.location.href = url;
     } catch (error) {
       return toast.error((error as Error)?.message);
     } finally {
