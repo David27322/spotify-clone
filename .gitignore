@@ -1,0 +1,6 @@
+ #env files and dependencies
+
+/node_modules
+.env*
+!.env.example
+/providers/SupabaseProvider
