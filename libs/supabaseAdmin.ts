@@ -115,6 +115,10 @@ const manageSubscriptionStatusChange = async (
   const subscription = (await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ['default_payment_method'],
   }))  as any;
+  const currentPeriodStart = subscription.current_period_start 
+  ?? subscription.items?.data?.[0]?.current_period_start;
+const currentPeriodEnd = subscription.current_period_end 
+  ?? subscription.items?.data?.[0]?.current_period_end;
 
   const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
     {
