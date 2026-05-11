@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2';
 import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
+import { MdClose } from 'react-icons/md';
 
 import { Song } from '@/types';
 import usePlayer from '@/hooks/usePlayer';
@@ -132,7 +133,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         className="
             hidden
             h-full
-            md:flex 
+            md:flex
+            flex-col
             justify-center 
             items-center 
             w-full 
@@ -140,45 +142,50 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             gap-x-6
           "
       >
-        <AiFillStepBackward
-          onClick={onPlayPrevious}
-          size={30}
-          className="
-              text-neutral-400 
-              cursor-pointer 
-              hover:text-white 
-              transition
-            "
-        />
-        <div
-          onClick={handlePlay}
-          className="
-              flex 
-              items-center 
-              justify-center
-              h-10
-              w-10 
-              rounded-full 
-              bg-white 
-              p-1 
-              cursor-pointer
-            "
-        >
-          <Icon size={30} className="text-black" />
+        <div className="flex items-center gap-x-6">
+          <AiFillStepBackward
+            onClick={onPlayPrevious}
+            size={30}
+            className="
+                text-neutral-400 
+                cursor-pointer 
+                hover:text-white 
+                transition
+              "
+          />
+          <div
+            onClick={handlePlay}
+            className="
+                flex 
+                items-center 
+                justify-center
+                h-10
+                w-10 
+                rounded-full 
+                bg-white 
+                p-1 
+                cursor-pointer
+              "
+          >
+            <Icon size={30} className="text-black" />
+          </div>
+          <AiFillStepForward
+            onClick={onPlayNext}
+            size={30}
+            className="
+                text-neutral-400 
+                cursor-pointer 
+                hover:text-white 
+                transition
+              "
+          />
         </div>
-        <AiFillStepForward
-          onClick={onPlayNext}
-          size={30}
-          className="
-              text-neutral-400 
-              cursor-pointer 
-              hover:text-white 
-              transition
-            "
-        />
+        <p className="text-neutral-600 text-[10px] text-center mt-1">
+          This is a demo/portfolio project for educational purposes only. All music belongs to their respective owners.
+        </p>
       </div>
 
-      <div className="hidden md:flex w-full justify-end pr-2">
+      <div className="hidden md:flex w-full justify-end items-center pr-2 gap-x-3">
         <div className="flex items-center gap-x-2 w-[120px]">
           <VolumeIcon
             onClick={toggleMute}
@@ -187,6 +194,11 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
           />
           <Slider value={volume} onChange={(value) => setVolume(value)} />
         </div>
+        <MdClose
+          onClick={player.reset}
+          size={20}
+          className="text-neutral-400 cursor-pointer hover:text-white transition"
+        />
       </div>
     </div>
   );
