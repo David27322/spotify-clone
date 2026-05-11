@@ -26,7 +26,7 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
       authModal.onOpen();
       router.replace('/');
     }
-  }, [isLoading, user, router, authModal]);
+  }, [isLoading, user, router]);
 
   if (songs.length === 0) {
     return (
