@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({
             border-neutral-700 
             top-[50%] 
             left-[50%] 
-            max-h-full 
+            max-h-[90vh]
             h-full 
             md:h-auto 
             md:max-h-[85vh] 
@@ -48,6 +48,7 @@ const Modal: React.FC<ModalProps> = ({
             bg-neutral-800 
             p-[25px] 
             focus:outline-none
+            overflow-y-auto
           "
         >
           <Dialog.Title
