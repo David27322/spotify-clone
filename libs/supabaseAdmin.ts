@@ -137,12 +137,12 @@ const currentPeriodEnd = subscription.current_period_end
       canceled_at: subscription.canceled_at
         ? toDateTime(subscription.canceled_at).toISOString()
         : null,
-      current_period_start: toDateTime(
-        subscription.current_period_start
-      ).toISOString(),
-      current_period_end: toDateTime(
-        subscription.current_period_end
-      ).toISOString(),
+      current_period_start: currentPeriodStart 
+  ? toDateTime(currentPeriodStart).toISOString() 
+  : new Date().toISOString(),
+current_period_end: currentPeriodEnd 
+  ? toDateTime(currentPeriodEnd).toISOString() 
+  : new Date().toISOString(),
       created: toDateTime(subscription.created).toISOString(),
       ended_at: subscription.ended_at
         ? toDateTime(subscription.ended_at).toISOString()
