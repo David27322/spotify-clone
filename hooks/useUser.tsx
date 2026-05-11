@@ -30,11 +30,10 @@ export const MyUserContextProvider = (props: Props) => {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setAccessToken(session?.access_token ?? null);
-      setIsLoadingUser(false);
-    });
+    supabase.auth.getUser().then(({ data: { user } }) => {
+  setUser(user ?? null);
+  setIsLoadingUser(false);
+});
 
     // Listen for auth changes
     const {
