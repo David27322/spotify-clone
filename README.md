@@ -37,15 +37,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Screenshots
 
-<table>
-  <tr>
-    <td><img src="images/pic1.png" width="250"/></td>
-    <td><img src="images/pic2.png" width="250"/></td>
-    <td><img src="images/pic3.png" width="250"/></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><img src="images/pic4.png" width="250"/></td>
-    <td><img src="images/pic5.png" width="250"/></td>
-  </tr>
-</table>
+<p align="center">
+  <img src="images/pic1.png" width="700"/>
+</p>
+
+<p align="center">
+  <img src="images/pic2.png" width="340"/>
+  <img src="images/pic3.png" width="340"/>
+</p>
+
+<p align="center">
+  <img src="images/pic4.png" width="340"/>
+  <img src="images/pic5.png" width="340"/>
+</p>
